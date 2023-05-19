@@ -4,40 +4,44 @@
 #include <unistd.h>
 
 #define BUFFER_SIZE 1024
+/**
+  * main - program thats interpreter UNIX command line
+  *
+  * Return: 0
+  */
+int main(void)
+{
+	char input[BUFFER_SIZE];
+	char *prompt = "simple_shell> ";
 
-int main() {
-    char input[BUFFER_SIZE];
-    char *prompt = "simple_shell> ";
+	while (1)
+	{
+		printf("%s", prompt);
+		if (fgets(input, BUFFER_SIZE, stdin) == NULL)
+		{
+			printf("\n");
+			break;
+		}
 
-    while (1) {
-        printf("%s", prompt);
+		input[strcspn(input, "\n")] = '\0';
 
-        // read user input
-        if (fgets(input, BUFFER_SIZE, stdin) == NULL) {
-            // handle end of file condition
-            printf("\n");
-            break;
-        }
+		pid_t pid = fork();
 
-        // remove trailing newline character
-        input[strcspn(input, "\n")] = '\0';
-
-        // execute command
-        pid_t pid = fork();
-        if (pid < 0) {
-            fprintf(stderr, "fork failed\n");
-            return 1;
-        } else if (pid == 0) {
-            // child process
-            if (execlp(input, input, NULL) == -1) {
-                fprintf(stderr, "Command not found: %s\n", input);
-                exit(1);
-            }
-        } else {
-            // parent process
-            wait(NULL);
-        }
-    }
-
-    return 0;
+		if (pid < 0)
+		{
+			fprintf(stderr, "fork failed\n");
+			return (1);
+		} else if (pid == 0)
+		{
+			if (execlp(input, input, NULL) == -1)
+			{
+				fprintf(stderr, "Command not found: %s\n", input);
+				exit(1);
+			}
+		} else
+		{
+			wait(NULL);
+		}
+	}
+	return (0);
 }
