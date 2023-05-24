@@ -3,45 +3,40 @@
 #include <string.h>
 #include <unistd.h>
 
-#define BUFFER_SIZE 1024
-/**
-  * main - program thats interpreter UNIX command line
-  *
-  * Return: 0
-  */
-int main(void)
-{
-	char input[BUFFER_SIZE];
-	char *prompt = "simple_shell> ";
+#define MAX_COMMAND_LENGTH 100
 
-	while (1)
-	{
-		printf("%s", prompt);
-		if (fgets(input, BUFFER_SIZE, stdin) == NULL)
-		{
-			printf("\n");
-			break;
-		}
+int main() {
+    char command[MAX_COMMAND_LENGTH];
 
-		input[strcspn(input, "\n")] = '\0';
+    while (1) {
+        printf("#cisfun$ ");
+        if (fgets(command, sizeof(command), stdin) == NULL)
+            break;
+            
+        command[strcspn(command, "\n")] = '\0';
 
-		pid_t pid = fork();
+        if (strcmp(command, "exit") == 0)
+            break;
 
-		if (pid < 0)
-		{
-			fprintf(stderr, "fork failed\n");
-			return (1);
-		} else if (pid == 0)
-		{
-			if (execlp(input, input, NULL) == -1)
-			{
-				fprintf(stderr, "Command not found: %s\n", input);
-				exit(1);
-			}
-		} else
-		{
-			wait(NULL);
-		}
-	}
-	return (0);
+        pid_t child_pid = fork();
+
+        if (child_pid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+
+        if (child_pid == 0) {
+            execlp(command, command, (char *)NULL);        
+            perror(command);
+            exit(EXIT_FAILURE);
+        } else {
+            int status;
+            waitpid(child_pid, &status, 0);
+
+            if (status != 0)
+                printf("%s: No such file or directory\n", command);
+        }
+    }
+
+    return 0;
 }
