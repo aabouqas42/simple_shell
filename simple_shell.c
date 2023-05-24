@@ -18,36 +18,39 @@ int main(void)
 	while (1)
 	{
 		printf("#cisfun$ ");
-		if (fgets(command, sizeof(command), stdin) == NULL)
+		fgets(command, sizeof(command), stdin);
+		if (feof(stdin))
+		{
+			printf("\n");
 			break;
+		}
+		char *args[MAX_COMMAND_LENGTH], *token;
+		int i = 0;
 
-		command[strcspn(command, "\n")] = '\0';
+		token = strtok(command, " \n");
+		while (token != NULL)
+		{
+			args[i++] = token;
+			token = strtok(NULL, " \n");
+		}
+		args[i] = NULL;
+		pid_t pid = fork();
 
-		if (strcmp(command, "exit") == 0)
-			break;
-
-		pid_t child_pid = fork();
-
-		if (child_pid == -1)
+		if (pid == -1)
 		{
 			perror("fork");
 			exit(EXIT_FAILURE);
-		}
-
-		if (child_pid == 0)
+		} else if (pid == 0)
 		{
-			execlp(command, command, (char *)NULL);
-			perror(command);
+
+			execvp(args[0], args);
+			perror("execvp");
 			exit(EXIT_FAILURE);
 		} else
 		{
 			int status;
 
-			waitpid(child_pid, &status, 0);
-			if (status != 0)
-				printf("%s: No such file or directory\n", command);
+			waitpid(pid, &status, 0);
 		}
-	}
-
-	return (0);
+	} return (0);
 }
