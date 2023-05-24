@@ -86,8 +86,10 @@ int main(void)
 	while (1)
 	{
 		printf("#cisfun$ ");
-		fgets(command, sizeof(command), stdin);
-
+		if (fgets(command, sizeof(command), stdin) == NULL)
+		{
+			break;
+		}
 		command[strcspn(command, "\n")] = '\0';
 
 		execute_command(command);
