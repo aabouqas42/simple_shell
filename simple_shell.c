@@ -5,47 +5,49 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define MAX_COMMAND_LENGTH 100
+#define MAX_COMMAND_LENGTH 1024
+/**
+  * main - program thats execute UNIX command line
+  *
+  * Return: always 0
+  */
+int main(void)
+{
+	char command[MAX_COMMAND_LENGTH];
+	char prompt[] = "#cisfun$ ";
 
-int main(void) {
-    char command[MAX_COMMAND_LENGTH];
-    char *args[MAX_COMMAND_LENGTH];
-    int i, status;
-    pid_t pid;
+	while (1)
+	{
+		pid_t pid;
 
-    while (1) {
-        printf("#cisfun$ ");
-        fgets(command, sizeof(command), stdin);
-        if (feof(stdin)) {
-            printf("\n");
-            break;
-        }
+		printf("%s", prompt);
 
-        // Tokenize the input command
-        i = 0;
-        args[i] = strtok(command, " \n");
-        while (args[i] != NULL) {
-            i++;
-            args[i] = strtok(NULL, " \n");
-        }
+		if (fgets(command, sizeof(command), stdin) == NULL)
+			break;
 
-        // Execute the command in a child process
-        pid = fork();
-        if (pid < 0) {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-        else if (pid == 0) {
-            if (execvp(args[0], args) < 0) {
-                perror("execvp");
-                exit(EXIT_FAILURE);
-            }
-        }
-        else {
-            // Wait for the child process to complete
-            waitpid(pid, &status, 0);
-        }
-    }
+		command[strcspn(command, "\n")] = '\0';
 
-    return 0;
-}}
+		if (strcmp(command, "exit") == 0)
+			break;
+
+		pid = fork();
+
+		if (pid < 0)
+		{
+			perror("Fork error");
+			exit(EXIT_FAILURE);
+		} else if (pid == 0)
+		{
+			execlp(command, command, (char *) NULL);
+			perror("Execution error");
+			exit(EXIT_FAILURE);
+		} else
+		{
+			int status;
+
+			waitpid(pid, &status, 0);
+		}
+	}
+
+	return (0);
+}
