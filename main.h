@@ -1,5 +1,5 @@
-#ifndef S_SH_H
-#define S_SH_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdlib.h>
 #include <string.h>
@@ -45,4 +45,4 @@ typedef struct builtin_s {
 
 void our_exit(char *arg);
 
-#endif /* S_SH_H */
+#endif /* MAIN_H */
