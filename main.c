@@ -1,169 +1,84 @@
 #include "main.h"
 
-/**
- * execute_command - Execute the command.
- * @arguments: The command arguments.
- * @history: The history of commands.
- * @line: The input line.
- */
-void execute_command(char **arguments, int history, char *line)
-{
-	pid_t child_pid;
-	int status, i = 0;
-
-	child_pid = fork();
-
-	if (child_pid == 0)
-	{
-		if (execve(arguments[0], arguments, environ) == -1)
-		{
-			check_error(arguments[0], history);
-			free(line);
-			while (arguments[i])
-			{
-				free(arguments[i]);
-				i++;
-			}
-			free(arguments);
-			exit(state);
-		}
-	}
-	else if (child_pid > 0)
-	{
-		wait(&status);
-		if (WIFEXITED(status))
-			state = WEXITSTATUS(status);
-	} else
-	{
-		perror("Error child");
-		state = EXIT_FAILURE;
-	}
-}
+void int_to_str(int);
 
 /**
- * check_builtin_command - Check if the command is a built-in function.
- * @word: The command to compare.
- * Return: 1 if it is a built-in command, 0 otherwise.
+ * main - Start the simple shell
+ * @ac: Number of args
+ * @ag: Args
+ * Return: state
  */
-int check_builtin_command(char *word)
+
+int main(int ac, char **ag)
 {
-	int i = 0;
-
-	builtin builtins[] = {
-		{"exit", our_exit},
-		{"env", print_environment},
-		{NULL, NULL}
-	};
-
-	if (check_void(word) == 0)
-		return (1);
-
-	while (builtins[i].command != NULL)
-	{
-		if (my_strcmp(word, builtins[i].command, _strlen(word) - 1) == 0)
-		{
-			builtins[i].function(word);
-			return (1);
-		}
-		i++;
-	} return (0);
-}
-
-/**
- * check_path - Check if the first argument is a file
- * inside the PATH directories.
- * @str: The string from getline.
- * Return: An array of strings (double pointer).
- */
-char **check_path(char *str)
-{
-	int i;
-	char *env_path = "PATH=", *concat, *path;
-	char **buffer, **array;
+	char *prompt = "\033[1;35m$\033[0m ";
+	char *str = NULL;
+	char **array;
+	int command, i;
+	size_t n = 0;
 	struct stat st;
+	int hist = 1;
 
-	array = create_buffer(str, " \n");
-
-	if (array[0][0] == '.' && array[0][1] == '/')
-		return (array);
-
-	path = clean_path(_getenv(env_path));
-
-	if (path)
+	if (ac <= 1)
+		sh_call = ag[0];
+	state = 0;
+	while (1)
 	{
-		buffer = create_buffer(path, ":\n");
-		for (i = 0; buffer[i]; i++)
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, prompt, 13);
+		command = getline(&str, &n, stdin);
+		if (command == EOF)
 		{
-			concat = concatenate_strings(buffer[i], array[0]);
-
-			if (stat(concat, &st) == 0)
-			{
-				for (i = 0; buffer[i]; i++)
-					free(buffer[i]);
-					free(buffer);
-					free(path);
-					free(array[0]);
-					array[0] = concat;
-					return (array);
-			}
-			free(concat);
+			if (isatty(STDIN_FILENO))
+				_putchar(10);
+			our_exit(str);
 		}
-		for (i = 0; buffer[i]; i++)
-			free(buffer[i]);
-			free(buffer);
+		if (command != -1)
+		{
+			if (chk_builtin(str) == 0)
+			{
+				array = chk_path(str);
+				if (stat(array[0], &st) == 0)
+					_execve(array, hist, str);
+				else
+					chk_error(str, hist);
+
+				for (i = 0; array[i]; i++)
+					free(array[i]);
+
+				free(array);
+			}
+		}
+		else
+			chk_error(str, hist);
+		hist++;
 	}
-	free(path);
-	return (array);
+	free(str);
+	return (state);
 }
 
 /**
- * clean_path - Make a copy of the PATH and verify if it starts with ':'.
- * @path_env: The PATH environment variable.
- * Return: A string with the final copy of PATH.
+ * int_to_str - Convert and print an int to string
+ * @i: number to print.
  */
-char *clean_path(char *path_env)
+
+void int_to_str(int i)
 {
-	int i, j = 0;
-	char *clean_path;
+	int dig = 0, cpi = i, pot = 1;
 
-	if (path_env == NULL)
-		return (NULL);
-
-	clean_path = malloc(sizeof(char) * _strlen(path_env) - 4);
-
-	if (path_env[5] == ':')
-		clean_path[j++] = '.';
-
-	for (i = 5; path_env[i]; j++, i++)
+	while (i > 0)
 	{
-		clean_path[j] = path_env[i];
+		i = i / 10;
+		dig++;
 	}
-	clean_path[j] = '\0';
-	return (clean_path);
-}
-
-/**
- * create_buffer - Create a buffer (double pointer).
- * @str: The string.
- * @delim: The delimiters.
- * Return: A buffer.
- */
-char **create_buffer(char *str, char *delim)
-{
-	char *token;
-	char **buffer;
-	int count, j = 0;
-
-	count = count_delimiters(str, delim);
-	buffer = malloc(sizeof(char *) * (count + 1));
-	token = strtok(str, delim);
-
-	while (token)
+	while (dig > 1)
 	{
-		buffer[j] = _strdup(token);
-		token = strtok(NULL, delim);
-		j++;
+		pot *= 10;
+		dig--;
 	}
-	buffer[j] = NULL;
-	return (buffer);
+	for (; pot > 0; pot /= 10)
+	{
+		_puterror((cpi / (pot)) + 48);
+		cpi %= pot;
+	}
 }
