@@ -10,10 +10,6 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-extern char **environ;
-int state;
-
-
 int _strlen(char *s);
 char *_strdup(char *str);
 int my_strcmp(char *s1, const char *s2, int len);
@@ -36,14 +32,17 @@ int check_builtin(char *word);
 char **check_path(char *str);
 char *clean_path(char *path_env);
 char **create_buffer(char *str, char *delim);
-
-
-typedef struct builtin_s 
+/**
+ * struct builtin_s - Structure to store information about built-in commands
+ * @command: Pointer to a character holding the name of the command
+ * @function: Function pointer to a function taking a
+ * char pointer parameter and returning void
+ */
+typedef struct builtin_s
 {
- char *command;
-void (*function)(char *);
+	char *command;
+	void (*function)(char *);
 } builtin;
-
 
 void our_exit(char *arg);
 
