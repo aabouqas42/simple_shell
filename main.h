@@ -1,6 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -37,9 +38,10 @@ char *clean_path(char *path_env);
 char **create_buffer(char *str, char *delim);
 
 
-typedef struct builtin_s {
-    char *command;
-    void (*function)(char *);
+typedef struct builtin_s 
+{
+ char *command;
+void (*function)(char *);
 } builtin;
 
 
