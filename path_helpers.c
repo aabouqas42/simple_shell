@@ -15,12 +15,11 @@ char *_getenv(const char *name)
 	{
 		env_name = environ[i]; 
 		for (j = 0; name[j] == env_name[j] && name[j] != '\0'; j++)
+			;
+		if (name[j] == '\0')
 		{
-			if (name[j] == '\0')
-			{
-				env_value = environ[i] + j + 1;
-				return (env_value);
-			}
+			env_value = environ[i] + j + 1;
+			return (env_value);
 		}
 	}
 	return (NULL);

@@ -7,13 +7,13 @@
  */
 int prompt(void)
 {
-	char *prompt = "#cisfun$ ";
-	ssize_t write_count = 0;
+	char *prompt = "$ ";
+	ssize_t writecount = 0;
 
-	if (isatty(STDIN_FILENO) == 1)
+	if (isatty(STDIN_FILENO))
 	{
-		write_count = write(STDOUT_FILENO, prompt, 2);
-		if (write_count == -1)
+		writecount = write(STDOUT_FILENO, prompt, 2);
+		if (writecount == -1)
 			exit(0);
 	}
 	return (0);
