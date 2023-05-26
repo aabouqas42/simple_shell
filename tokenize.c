@@ -8,28 +8,29 @@
  */
 char **tokenize(char *buffer)
 {
-	int i, count = 0;
-	char **av, *token, *copy;
+	char *token;
+	int i = 0, wordcount = 0;
+	char *delimiter = " \n";
+	char **av;
 
-	if (buffer == NULL)
+	wordcount = _splitstring(buffer);
+	if (!wordcount)
 		return (NULL);
 
-	count = _splitstring(buffer);
-	av = malloc(sizeof(char *) * (count + 1));
+	av = malloc((wordcount + 1) * sizeof(char *));
 	if (av == NULL)
-		return (NULL);
-	copy = _strdup(buffer);
-	token = strtok(copy, " \t");
-	for (i = 0; token != NULL; i++)
+		exit(1);
+	token = strtok(buffer, delimiter);
+
+	while (token != NULL)
 	{
 		av[i] = _strdup(token);
-		token = strtok(NULL, " \t");
+		token = strtok(NULL, delimiter);
+		i++;
 	}
 	av[i] = NULL;
-	free(copy);
 	return (av);
 }
-
 /**
  * _splitPATH - splits the PATH string into individual directories
  * @str: PATH string
