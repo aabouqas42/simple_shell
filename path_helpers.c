@@ -13,17 +13,18 @@ char *_getenv(const char *name)
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		env_name = environ[i];
+		env_name = environ[i]; 
 		for (j = 0; name[j] == env_name[j] && name[j] != '\0'; j++)
+		{
 			if (name[j] == '\0')
 			{
 				env_value = environ[i] + j + 1;
 				return (env_value);
 			}
+		}
 	}
 	return (NULL);
 }
-
 /**
  * _env - prints the current environment
  *
