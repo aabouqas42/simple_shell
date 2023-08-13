@@ -1,5 +1,5 @@
-# simple_shell
+# simple shell
 
-## Brief ::
+## Brief :
 
-on this project we crat a Simple Shell file on C thats execut comands the user entred
+on this project we creat a Simple Shell program using C thats executs comands the user entred
