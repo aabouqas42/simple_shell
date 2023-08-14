@@ -4,6 +4,7 @@ int main(int argc, char *argv[])
 		char *cmd;
 		while (1)
 		{
+
 			write (1, "#cisfun$ ", 9);
 			getline(&cmd, &size, stdin);
 			cmd[length(cmd) - 1] = '\0';
