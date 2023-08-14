@@ -1,3 +1,5 @@
+#include "main.h"
+
 int main(int argc, char *argv[])
 	{
 		unsigned long size = 0;
