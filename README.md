@@ -89,8 +89,6 @@ Copy
 .
 ├── main.c           # Entry point of the shell
 ├── shell.h          # Header file with function prototypes and structure definitions
-├── shell.c          # Contains the main shell loop and command execution logic
-├── utils.c          # Utility functions for string manipulation, parsing, etc.
 └── README.md        # Project documentation
 Contributing
 Contributions to the Simple Shell project are welcome! If you find any issues or want to add new features, feel free to open an issue or submit a pull request.
