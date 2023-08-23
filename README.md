@@ -1,50 +1,115 @@
-Introduction
-This project is a simple UNIX command language interpreter that reads commands from either a file or standard input and executes them. It is written in C and follows the Betty style guide.
+#Simple Shell
+This is a simple shell program developed as part of the ALX Software Engineering program. The shell supports basic command execution and some built-in commands.
 
 Features
-The shell can execute any command that can be run by the shell on your system.
-It supports redirection of input and output.
-It can handle pipelines of commands.
-It has a number of built-in commands, such as cd, echo, and exit.
+Executes external commands by forking a child process.
+Supports input and output redirection using < and > operators.
+Implements basic built-in commands such as exit, cd, and env.
+Handles background processes using the & operator.
+Provides a prompt for user input.
+Supports command line arguments.
 Getting Started
-To get started, you will need to clone the repository and compile the shell.
+To get started with the simple shell, follow these steps:
 
-git clone https://github.com/your_username/simple_shell.git
-cd simple_shell
-gcc -Wall -Werror -Wextra -pedantic \*.c -o hsh
-Once the shell is compiled, you can run it by typing the following command:
+Clone the repository:
 
-./hsh
-The shell will then prompt you for a command. You can enter any command that you would like to run.
+bash
+Copy
+$ git clone https://github.com/your-username/simple-shell.git
 
-Examples
-Here are some examples of commands that you can run on the shell:
+```
 
-ls
-cd ..
-pwd
-echo "Hello, world!"
-You can also use the shell to run pipelines of commands. For example, the following command will print the contents of the file file.txt to the standard output:
+Change to the project directory:
 
-cat file.txt | wc -l
-Built-in Commands
-The shell has a number of built-in commands, which are commands that are built into the shell itself. These commands do not need to be run by an external program.
+bash
+Copy
+$ cd simple-shell
+```
 
-The following is a list of the built-in commands:
+Compile the source code:
 
-cd - Change the current directory.
-echo - Print a message to the standard output.
-exit - Exit the shell.
-pwd - Print the current working directory.
-Testing
-The shell has been tested using the Betty style checker: https://github.com/holbertonschool/Betty. To run the tests, you can use the following command:
+bash
+Copy
+$ gcc -Wall -Werror -Wextra -pedantic \*.c -o shell
 
-betty .
-Documentation
-The documentation for the shell can be found in the README.md: README.md file.
+```
+
+Run the shell:
+
+bash
+Copy
+$ ./shell
+```
+
+Usage
+Once the shell is running, you can enter commands and execute them. The basic syntax is:
+
+bash
+Copy
+$ command [arguments]
+Here are some examples of supported commands:
+
+Execute an external command:
+
+bash
+Copy
+$ ls -l
+
+```
+
+Change directory:
+
+bash
+Copy
+$ cd /path/to/directory
+```
+
+Exit the shell:
+
+bash
+Copy
+$ exit
+
+```
+
+Display environment variables:
+
+bash
+Copy
+$ env
+```
+
+Execute a command in the background:
+
+bash
+Copy
+$ command &
+
+```
+
+Redirect input from a file:
+
+bash
+Copy
+$ command < input.txt
+```
+
+Redirect output to a file:
+
+bash
+Copy
+$ command > output.txt
+
+```
+
+For more information on supported features and usage, please refer to the project documentation or the source code itself.
 
 Contributing
-Contributions to this project are welcome. Please follow the contributing guidelines: CONTRIBUTING.md when making a contribution.
+Contributions to the simple shell project are welcome. If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the project's GitHub repository.
 
 License
-This project is licensed under the MIT License. See the LICENSE: LICENSE file for more information.
+This project is licensed under the MIT License. See the LICENSE file for more information.
+
+Acknowledgments
+This simple shell project is based on the concepts learned during the ALX Software Engineering program. Special thanks to all the instructors and mentors who contributed to the development of this project.
+```
