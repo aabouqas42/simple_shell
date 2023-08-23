@@ -11,9 +11,8 @@ Provides a prompt for user input.
 Supports command line arguments.
 =======
 
-> > > > > > > 15f7542a3a7a392004717c164bbc366ecae8ec34
-> > > > > > > Getting Started
-> > > > > > > To get started with the simple shell, follow these steps:
+> Getting Started
+To get started with the simple shell, follow these steps:
 
 <<<<<<< HEAD
 Clone the repository:
@@ -22,8 +21,6 @@ git clone https://github.com/your_username/simple_shell.git
 cd simple_shell
 gcc -Wall -Werror -Wextra -pedantic \*.c -o hsh
 Once the shell is compiled, you can run it by typing the following command:
-
-> > > > > > > 15f7542a3a7a392004717c164bbc366ecae8ec34
 
 bash
 Copy
@@ -138,5 +135,3 @@ Contributions to this project are welcome. Please follow the contributing guidel
 
 License
 This project is licensed under the MIT License. See the LICENSE file for more information.
-
-> > > > > > > 15f7542a3a7a392004717c164bbc366ecae8ec34
