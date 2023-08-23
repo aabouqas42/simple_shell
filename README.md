@@ -1,41 +1,28 @@
-# ALX Simple Shell
+# Simple Shell
 
-This repository contains the implementation of a simple shell program as part of the ALX Software Engineering program.
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-
-## Introduction
-
-The ALX Simple Shell is a basic command-line interpreter that allows users to execute commands and manage processes. It provides a user-friendly interface for interacting with the underlying operating system.
+Simple Shell is a project that implements a basic command-line interpreter or shell. It provides a simple interface for users to interact with the operating system by executing commands.
 
 ## Features
 
-- Executes external commands by creating child processes.
-- Supports input and output redirection using `<` and `>` operators.
-- Implements basic built-in commands such as `cd`, `exit`, and `env`.
-- Handles background processes using the `&` operator.
-- Provides a prompt for user input.
-- Supports command line arguments.
+- Executes commands entered by the user.
+- Handles built-in commands such as `cd`, `exit`, etc.
+- Supports execution of external commands.
+- Parses command line arguments and handles input/output redirection.
+- Supports piping of commands.
+- Implements signal handling for Ctrl+C (`SIGINT`) and Ctrl+D (`EOF`).
 
 ## Getting Started
 
-To get started with the ALX Simple Shell, follow these steps:
+To get started with the Simple Shell project, follow these steps:
 
 1. Clone the repository:
-
-   $ git clone https://github.com/your-username/alx-simple-shell.git
-   Change to the project directory:
+   ```shell
+   git clone https://github.com/your-username/simple_shell.git
+   Change into the project directory:
+   ```
 
 Copy
-$ cd alx-simple-shell
+cd simple_shell
 
 ```
 
@@ -43,66 +30,75 @@ Compile the source code:
 
 
 Copy
-$ gcc -Wall -Werror -Wextra -pedantic *.c -o shell
+gcc -Wall -Werror -Wextra -pedantic *.c -o shell
 ```
 
 Run the shell:
 
 Copy
-$ ./shell
+./shell
 
 ```
 
 Usage
-Once the shell is running, you can enter commands and execute them. The basic syntax is:
+The Simple Shell supports the following features and commands:
+
+Interactive mode:
 
 
 Copy
-$ command [arguments]
-Here are some examples of supported commands:
-
-Execute an external command:
-
-
-Copy
-$ ls -l
+$ ./shell
+Simple Shell$ ls
+file1 file2 file3
+Simple Shell$ pwd
+/path/to/current/directory
+Simple Shell$ exit
 ```
 
-Change directory:
+Non-interactive mode:
 
 Copy
-$ cd /path/to/directory
-
-```
-
-Exit the shell:
-
-
-Copy
-$ exit
-```
-
-Display environment variables:
-
-Copy
-$ env
+$ echo "ls" | ./shell
+file1 file2 file3
 
 ```
 
-Execute a command in the background:
+Built-in commands:
+
+cd [directory]: Change the current working directory.
+exit: Exit the shell.
+Redirecting input/output:
 
 
 Copy
-$ command &
+$ ls > files.txt   # Redirect the output of ls to a file
+$ cat < files.txt  # Read input from a file
 ```
 
-For more information on supported features and usage, please refer to the project documentation or the source code itself.
+Piping commands:
 
+Copy
+$ ls | grep file # Pipe the output of ls to grep
+
+```
+
+File Structure
+The project repository is organized as follows:
+
+Copy
+.
+├── main.c           # Entry point of the shell
+├── shell.h          # Header file with function prototypes and structure definitions
+├── shell.c          # Contains the main shell loop and command execution logic
+├── utils.c          # Utility functions for string manipulation, parsing, etc.
+└── README.md        # Project documentation
 Contributing
-Contributions to the ALX Simple Shell project are welcome. If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request on the project's GitHub repository.
+Contributions to the Simple Shell project are welcome! If you find any issues or want to add new features, feel free to open an issue or submit a pull request.
 
 License
 This project is licensed under the MIT License. See the LICENSE file for more information.
 
 Acknowledgments
-This simple shell project is developed as part of the ALX Software Engineering program. Special thanks to all the instructors and mentors who contributed to the development of this project.
+The Simple Shell project is part of the ALX Software Engineering curriculum and is based on the Unix shell.
+
+```
