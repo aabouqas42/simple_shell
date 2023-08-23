@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 		if (pid == 0)
 		{
 			int result = execut(cmd);
+
 			if (result == -1)
 			{
 				perror(argv[0]);
