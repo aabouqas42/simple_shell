@@ -1,17 +1,12 @@
 Introduction
 This project is a simple UNIX command language interpreter that reads commands from either a file or standard input and executes them. It is written in C and follows the Betty style guide.
 
-Features
-The shell can execute any command that can be run by the shell on your system.
-It supports redirection of input and output.
-It can handle pipelines of commands.
-It has a number of built-in commands, such as cd, echo, and exit.
 Getting Started
 To get started, you will need to clone the repository and compile the shell.
 
 git clone https://github.com/your_username/simple_shell.git
 cd simple_shell
-gcc -Wall -Werror -Wextra -pedantic \*.c -o hsh
+gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 Once the shell is compiled, you can run it by typing the following command:
 
 ./hsh
@@ -41,10 +36,10 @@ The shell has been tested using the Betty style checker: https://github.com/holb
 
 betty .
 Documentation
-The documentation for the shell can be found in the README.md: README.md file.
+The documentation for the shell can be found in the README.md file.
 
 Contributing
-Contributions to this project are welcome. Please follow the contributing guidelines: CONTRIBUTING.md when making a contribution.
+Contributions to this project are welcome. Please follow the contributing guidelines in the CONTRIBUTING.md file when making a contribution.
 
 License
-This project is licensed under the MIT License. See the LICENSE: LICENSE file for more information.
+This project is licensed under the MIT License. See the LICENSE file for more information.
