@@ -77,7 +77,7 @@ int execut(char *cmd)
 		i++;
 	}
 	args[i] = NULL;
-	state = execvp(args[0], args);
+	state = system(cmd);
 	free(args);
 	return (state);
 }
