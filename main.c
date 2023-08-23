@@ -1,41 +1,70 @@
-#include "main.h"
+#include "shell.h"
 
 /**
- * main - entry point of the shell program
- *
- * Return: 0 on success
+ * free_data - frees struct
+ * @shell_data: Struct
+ * Return: void
  */
-int main(void)
+void free_data(arg_list *shell_data)
 {
-	char *buffer = NULL;
-	char **av = NULL;
-	char *PATH = NULL;
-	char *copy = NULL;
-	char *full_path_buffer = NULL;
-	int exit_status = 0;
+	unsigned int i;
 
-	while (1)
+	for (i = 0; shell_data->_environ[i]; i++)
 	{
-		prompt();
-		buffer = _read();
-		if (!buffer)
-			continue;
-		av = tokenize(buffer);
-		if (!av)
-		{
-			free(buffer);
-			continue;
-		}
-		PATH = _getenv("PATH");
-		if (!PATH)
-		{
-			perror("Error");
-			continue;
-		}
-		full_path_buffer = _fullpathbuffer(av, PATH, copy);
-		if (checkbuiltins(av, buffer, exit_status) == 1)
-			continue;
-		exit_status = _forkprocess(av, buffer, full_path_buffer);
+		free(shell_data->_environ[i]);
 	}
-	return (0);
+
+	free(shell_data->_environ);
+	free(shell_data->pid);
+}
+
+/**
+ * set_data - initialize struct
+ * @shell_data: Struct
+ * @av: argument vector
+ * Return: void
+ */
+void set_data(arg_list *shell_data, char **av)
+{
+	unsigned int i;
+
+	shell_data->av = av;
+	shell_data->input = NULL;
+	shell_data->args = NULL;
+	shell_data->status = 0;
+	shell_data->counter = 1;
+
+	for (i = 0; environ[i]; i++)
+		;
+
+	shell_data->_environ = malloc(sizeof(char *) * (i + 1));
+
+	for (i = 0; environ[i]; i++)
+	{
+		shell_data->_environ[i] = _strdup(environ[i]);
+	}
+
+	shell_data->_environ[i] = NULL;
+	shell_data->pid = _itoa(getpid());
+}
+
+/**
+ * main - Entry point
+ * @ac: argument count
+ * @av: argument vector
+ *
+ * Return: 0
+ */
+int main(int ac, char **av)
+{
+	arg_list shell_data;
+	(void) ac;
+
+	signal(SIGINT, handle_signal);
+	set_data(&shell_data, av);
+	loop_sh(&shell_data);
+	free_data(&shell_data);
+	if (shell_data.status < 0)
+		return (255);
+	return (shell_data.status);
 }
