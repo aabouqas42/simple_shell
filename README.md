@@ -1,6 +1,7 @@
 #Simple Shell
 This is a simple shell program developed as part of the ALX Software Engineering program. The shell supports basic command execution and some built-in commands.
 
+<<<<<<< HEAD
 Features
 Executes external commands by forking a child process.
 Supports input and output redirection using < and > operators.
@@ -8,10 +9,21 @@ Implements basic built-in commands such as exit, cd, and env.
 Handles background processes using the & operator.
 Provides a prompt for user input.
 Supports command line arguments.
-Getting Started
-To get started with the simple shell, follow these steps:
+=======
 
+> > > > > > > 15f7542a3a7a392004717c164bbc366ecae8ec34
+> > > > > > > Getting Started
+> > > > > > > To get started with the simple shell, follow these steps:
+
+<<<<<<< HEAD
 Clone the repository:
+=======
+git clone https://github.com/your_username/simple_shell.git
+cd simple_shell
+gcc -Wall -Werror -Wextra -pedantic \*.c -o hsh
+Once the shell is compiled, you can run it by typing the following command:
+
+> > > > > > > 15f7542a3a7a392004717c164bbc366ecae8ec34
 
 bash
 Copy
@@ -31,6 +43,8 @@ Compile the source code:
 bash
 Copy
 $ gcc -Wall -Werror -Wextra -pedantic \*.c -o shell
+
+<<<<<<< HEAD
 
 ```
 
@@ -113,3 +127,16 @@ This project is licensed under the MIT License. See the LICENSE file for more in
 Acknowledgments
 This simple shell project is based on the concepts learned during the ALX Software Engineering program. Special thanks to all the instructors and mentors who contributed to the development of this project.
 ```
+
+=======
+betty .
+Documentation
+The documentation for the shell can be found in the README.md file.
+
+Contributing
+Contributions to this project are welcome. Please follow the contributing guidelines in the CONTRIBUTING.md file when making a contribution.
+
+License
+This project is licensed under the MIT License. See the LICENSE file for more information.
+
+> > > > > > > 15f7542a3a7a392004717c164bbc366ecae8ec34
