@@ -21,7 +21,7 @@ To get started with the Simple Shell project, follow these steps:
    Change into the project directory:
    ```
 
-Copy
+
 cd simple_shell
 
 ```
@@ -29,13 +29,12 @@ cd simple_shell
 Compile the source code:
 
 
-Copy
+
 gcc -Wall -Werror -Wextra -pedantic *.c -o shell
 ```
 
 Run the shell:
 
-Copy
 ./shell
 
 ```
@@ -46,7 +45,7 @@ The Simple Shell supports the following features and commands:
 Interactive mode:
 
 
-Copy
+
 $ ./shell
 Simple Shell$ ls
 file1 file2 file3
@@ -57,7 +56,7 @@ Simple Shell$ exit
 
 Non-interactive mode:
 
-Copy
+
 $ echo "ls" | ./shell
 file1 file2 file3
 
@@ -70,14 +69,13 @@ exit: Exit the shell.
 Redirecting input/output:
 
 
-Copy
 $ ls > files.txt   # Redirect the output of ls to a file
 $ cat < files.txt  # Read input from a file
 ```
 
 Piping commands:
 
-Copy
+
 $ ls | grep file # Pipe the output of ls to grep
 
 ```
@@ -85,7 +83,7 @@ $ ls | grep file # Pipe the output of ls to grep
 File Structure
 The project repository is organized as follows:
 
-Copy
+
 .
 ├── main.c           # Entry point of the shell
 ├── shell.h          # Header file with function prototypes and structure definitions
